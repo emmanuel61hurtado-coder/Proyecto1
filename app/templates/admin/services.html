@@ -1,0 +1,53 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ t.admin_services }}{% endblock %}
+
+{% block admin_content %}
+<div class="admin-header">
+  <div>
+    <h1>{{ t.admin_services }}</h1>
+    <p class="subtitle">Los trabajos y rituales que se muestran en el sitio</p>
+  </div>
+  <a href="{{ url_for('admin.service_new') }}" class="btn btn-accent">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>
+    Nuevo servicio
+  </a>
+</div>
+
+<div class="panel">
+  {% if services %}
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre (ES)</th>
+        <th>Categoría</th>
+        <th>Destacado</th>
+        <th>Activo</th>
+        <th>Orden</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for service in services %}
+      <tr onclick="window.location='{{ url_for('admin.service_edit', service_id=service.id) }}'">
+        <td>{{ service.name_es }}</td>
+        <td>{{ service.category }}</td>
+        <td>{{ '★ Sí' if service.is_featured else '—' }}</td>
+        <td>{{ '✓ Activo' if service.is_active else 'Inactivo' }}</td>
+        <td>{{ service.order_index }}</td>
+        <td onclick="event.stopPropagation()">
+          <form method="POST" action="{{ url_for('admin.service_delete', service_id=service.id) }}"
+                data-confirm="¿Eliminar el servicio '{{ service.name_es }}'?" style="display:inline;">
+            <button type="submit" class="btn btn-danger-outline btn-sm">Eliminar</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state">
+    <p>No hay servicios creados todavía.</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

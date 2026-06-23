@@ -1,0 +1,73 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ t.admin_dashboard }}{% endblock %}
+
+{% block admin_content %}
+<div class="admin-header">
+  <div>
+    <h1>{{ t.admin_dashboard }}</h1>
+    <p class="subtitle">Resumen general de la actividad del sitio</p>
+  </div>
+  <a href="{{ url_for('admin.orders_list') }}" class="btn btn-accent">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+    Ver todos los pedidos
+  </a>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="label">Total de pedidos</div>
+    <div class="value">{{ total_orders }}</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Nuevos sin atender</div>
+    <div class="value accent">{{ new_orders }}</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">En proceso</div>
+    <div class="value info">{{ in_progress }}</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Completados</div>
+    <div class="value success">{{ completed }}</div>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-head">
+    <h2>Pedidos recientes</h2>
+    <a href="{{ url_for('admin.orders_list') }}" class="btn btn-outline btn-sm">Ver todos</a>
+  </div>
+
+  {% if recent_orders %}
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Código</th>
+        <th>Cliente</th>
+        <th>Servicio</th>
+        <th>Estado</th>
+        <th>Fecha</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in recent_orders %}
+      <tr onclick="window.location='{{ url_for('admin.order_detail', order_id=order.id) }}'">
+        <td>{% if not order.is_read %}<span class="unread-dot"></span>{% endif %}</td>
+        <td>{{ order.code }}</td>
+        <td>{{ order.customer_name }}</td>
+        <td>{{ order.service_name_snapshot or '—' }}</td>
+        <td><span class="badge-status" style="color: {{ order.status_color() }};">{{ order.status_label('es') }}</span></td>
+        <td>{{ order.created_at.strftime('%d/%m/%Y %H:%M') }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+    <p>Todavía no hay pedidos registrados. Aparecerán aquí en cuanto alguien complete el formulario del sitio.</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

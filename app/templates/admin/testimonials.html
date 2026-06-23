@@ -1,0 +1,49 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ t.admin_testimonials }}{% endblock %}
+
+{% block admin_content %}
+<div class="admin-header">
+  <div>
+    <h1>{{ t.admin_testimonials }}</h1>
+    <p class="subtitle">Opiniones de clientes que se muestran en el sitio</p>
+  </div>
+  <a href="{{ url_for('admin.testimonial_new') }}" class="btn btn-accent">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>
+    Nuevo testimonio
+  </a>
+</div>
+
+<div class="panel">
+  {% if testimonials %}
+  <table>
+    <thead>
+      <tr>
+        <th>Cliente</th>
+        <th>Texto (ES)</th>
+        <th>Calificación</th>
+        <th>Activo</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t_item in testimonials %}
+      <tr onclick="window.location='{{ url_for('admin.testimonial_edit', t_id=t_item.id) }}'">
+        <td>{{ t_item.customer_name }}</td>
+        <td>{{ t_item.text_es[:60] }}{{ '...' if t_item.text_es|length > 60 }}</td>
+        <td>{{ '★' * t_item.rating }}</td>
+        <td>{{ '✓ Activo' if t_item.is_active else 'Inactivo' }}</td>
+        <td onclick="event.stopPropagation()">
+          <form method="POST" action="{{ url_for('admin.testimonial_delete', t_id=t_item.id) }}"
+                data-confirm="¿Eliminar el testimonio de {{ t_item.customer_name }}?" style="display:inline;">
+            <button type="submit" class="btn btn-danger-outline btn-sm">Eliminar</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state"><p>No hay testimonios creados todavía.</p></div>
+  {% endif %}
+</div>
+{% endblock %}

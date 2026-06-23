@@ -1,0 +1,88 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ t.admin_settings }}{% endblock %}
+
+{% block admin_content %}
+<div class="admin-header">
+  <div>
+    <h1>{{ t.admin_settings }}</h1>
+    <p class="subtitle">Información general, WhatsApp y redes sociales del sitio</p>
+  </div>
+</div>
+
+<div class="panel" style="padding: 28px 26px; margin-bottom: 24px;">
+  <form method="POST" class="form-grid">
+    <div class="form-row-2">
+      <div class="field">
+        <label for="site_name">Nombre del sitio</label>
+        <input type="text" id="site_name" name="site_name" value="{{ settings.site_name }}">
+      </div>
+      <div class="field">
+        <label for="whatsapp_number">Número de WhatsApp (con código de país, sin signos)</label>
+        <input type="text" id="whatsapp_number" name="whatsapp_number" placeholder="573001234567" value="{{ settings.whatsapp_number }}">
+        <div class="field-hint">Ejemplo: 573001234567 (Colombia) — sin "+", sin espacios ni guiones.</div>
+      </div>
+    </div>
+
+    <div class="form-row-2">
+      <div class="field">
+        <label for="tagline_es">Eslogan (Español)</label>
+        <input type="text" id="tagline_es" name="tagline_es" value="{{ settings.tagline_es }}">
+      </div>
+      <div class="field">
+        <label for="tagline_en">Tagline (English)</label>
+        <input type="text" id="tagline_en" name="tagline_en" value="{{ settings.tagline_en }}">
+      </div>
+    </div>
+
+    <div class="form-row-2">
+      <div class="field">
+        <label for="contact_email">Correo de contacto</label>
+        <input type="email" id="contact_email" name="contact_email" value="{{ settings.contact_email }}">
+      </div>
+      <div class="field">
+        <label for="instagram_url">Instagram (URL completa)</label>
+        <input type="url" id="instagram_url" name="instagram_url" value="{{ settings.instagram_url }}">
+      </div>
+    </div>
+
+    <div class="form-row-2">
+      <div class="field">
+        <label for="facebook_url">Facebook (URL completa)</label>
+        <input type="url" id="facebook_url" name="facebook_url" value="{{ settings.facebook_url }}">
+      </div>
+    </div>
+
+    <div class="form-row-2">
+      <div class="field">
+        <label for="whatsapp_default_message_es">Mensaje predeterminado de WhatsApp (Español)</label>
+        <textarea id="whatsapp_default_message_es" name="whatsapp_default_message_es">{{ settings.whatsapp_default_message_es }}</textarea>
+      </div>
+      <div class="field">
+        <label for="whatsapp_default_message_en">Default WhatsApp message (English)</label>
+        <textarea id="whatsapp_default_message_en" name="whatsapp_default_message_en">{{ settings.whatsapp_default_message_en }}</textarea>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-accent">Guardar configuración</button>
+  </form>
+</div>
+
+<div class="panel" style="padding: 28px 26px;">
+  <h2 style="font-size: 1.05rem; margin: 0 0 18px;">Cambiar contraseña</h2>
+  <form method="POST" action="{{ url_for('admin.change_password') }}" class="form-grid" style="max-width: 420px;">
+    <div class="field">
+      <label for="current_password">Contraseña actual</label>
+      <input type="password" id="current_password" name="current_password" required>
+    </div>
+    <div class="field">
+      <label for="new_password">Nueva contraseña</label>
+      <input type="password" id="new_password" name="new_password" required minlength="6">
+    </div>
+    <div class="field">
+      <label for="confirm_password">Confirmar nueva contraseña</label>
+      <input type="password" id="confirm_password" name="confirm_password" required minlength="6">
+    </div>
+    <button type="submit" class="btn btn-outline">Actualizar contraseña</button>
+  </form>
+</div>
+{% endblock %}

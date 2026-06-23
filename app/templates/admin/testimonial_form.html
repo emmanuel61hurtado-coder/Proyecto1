@@ -1,0 +1,51 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ 'Editar testimonio' if testimonial else 'Nuevo testimonio' }}{% endblock %}
+
+{% block admin_content %}
+<div class="admin-header">
+  <div>
+    <h1>{{ 'Editar testimonio' if testimonial else 'Nuevo testimonio' }}</h1>
+  </div>
+  <a href="{{ url_for('admin.testimonials_list') }}" class="btn btn-outline">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Volver
+  </a>
+</div>
+
+<div class="panel" style="padding: 28px 26px;">
+  <form method="POST" class="form-grid">
+    <div class="form-row-2">
+      <div class="field">
+        <label for="customer_name">Nombre del cliente *</label>
+        <input type="text" id="customer_name" name="customer_name" required value="{{ testimonial.customer_name if testimonial else '' }}">
+      </div>
+      <div class="field">
+        <label for="rating">Calificación (1-5)</label>
+        <input type="number" id="rating" name="rating" min="1" max="5" value="{{ testimonial.rating if testimonial else 5 }}">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="text_es">Texto (Español) *</label>
+      <textarea id="text_es" name="text_es" required>{{ testimonial.text_es if testimonial else '' }}</textarea>
+    </div>
+    <div class="field">
+      <label for="text_en">Text (English) *</label>
+      <textarea id="text_en" name="text_en" required>{{ testimonial.text_en if testimonial else '' }}</textarea>
+    </div>
+
+    <div class="form-row-2">
+      <div class="field">
+        <label for="order_index">Orden de aparición</label>
+        <input type="number" id="order_index" name="order_index" value="{{ testimonial.order_index if testimonial else 0 }}">
+      </div>
+      <div class="field-checkbox" style="padding-top: 28px;">
+        <input type="checkbox" id="is_active" name="is_active" {{ 'checked' if not testimonial or testimonial.is_active }}>
+        <label for="is_active">Activo (visible en el sitio)</label>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-accent">Guardar testimonio</button>
+  </form>
+</div>
+{% endblock %}

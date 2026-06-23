@@ -1,0 +1,98 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ 'Editar servicio' if service else 'Nuevo servicio' }}{% endblock %}
+
+{% block admin_content %}
+<div class="admin-header">
+  <div>
+    <h1>{{ 'Editar servicio' if service else 'Nuevo servicio' }}</h1>
+    <p class="subtitle">Define el contenido en español e inglés</p>
+  </div>
+  <a href="{{ url_for('admin.services_list') }}" class="btn btn-outline">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Volver
+  </a>
+</div>
+
+<div class="panel" style="padding: 28px 26px;">
+  <form method="POST" class="form-grid">
+    <div class="form-row-2">
+      <div class="field">
+        <label for="name_es">Nombre (Español) *</label>
+        <input type="text" id="name_es" name="name_es" required value="{{ service.name_es if service else '' }}">
+      </div>
+      <div class="field">
+        <label for="name_en">Name (English) *</label>
+        <input type="text" id="name_en" name="name_en" required value="{{ service.name_en if service else '' }}">
+      </div>
+    </div>
+
+    <div class="form-row-2">
+      <div class="field">
+        <label for="description_es">Descripción (Español) *</label>
+        <textarea id="description_es" name="description_es" required>{{ service.description_es if service else '' }}</textarea>
+      </div>
+      <div class="field">
+        <label for="description_en">Description (English) *</label>
+        <textarea id="description_en" name="description_en" required>{{ service.description_en if service else '' }}</textarea>
+      </div>
+    </div>
+
+    <div class="form-row-2">
+      <div class="field">
+        <label for="category">Categoría</label>
+        <select id="category" name="category">
+          {% set current_cat = service.category if service else 'amor' %}
+          <option value="amor" {{ 'selected' if current_cat == 'amor' }}>Amor</option>
+          <option value="dinero" {{ 'selected' if current_cat == 'dinero' }}>Dinero y prosperidad</option>
+          <option value="proteccion" {{ 'selected' if current_cat == 'proteccion' }}>Protección</option>
+          <option value="salud" {{ 'selected' if current_cat == 'salud' }}>Salud y bienestar</option>
+          <option value="espiritual" {{ 'selected' if current_cat == 'espiritual' }}>Limpieza espiritual</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="icon">Ícono</label>
+        <select id="icon" name="icon">
+          {% set current_icon = service.icon if service else 'moon' %}
+          <option value="heart" {{ 'selected' if current_icon == 'heart' }}>Corazón (amor)</option>
+          <option value="coin" {{ 'selected' if current_icon == 'coin' }}>Moneda (dinero)</option>
+          <option value="shield" {{ 'selected' if current_icon == 'shield' }}>Escudo (protección)</option>
+          <option value="sun" {{ 'selected' if current_icon == 'sun' }}>Sol (salud)</option>
+          <option value="leaf" {{ 'selected' if current_icon == 'leaf' }}>Hoja (limpieza)</option>
+          <option value="star" {{ 'selected' if current_icon == 'star' }}>Estrella (tarot/espiritual)</option>
+          <option value="moon" {{ 'selected' if current_icon == 'moon' }}>Luna (general)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row-2">
+      <div class="field">
+        <label for="price_note_es">Nota de precio (Español)</label>
+        <input type="text" id="price_note_es" name="price_note_es" placeholder="Ej: Previa consulta" value="{{ service.price_note_es if service else '' }}">
+      </div>
+      <div class="field">
+        <label for="price_note_en">Price note (English)</label>
+        <input type="text" id="price_note_en" name="price_note_en" placeholder="Ex: By consultation" value="{{ service.price_note_en if service else '' }}">
+      </div>
+    </div>
+
+    <div class="form-row-2">
+      <div class="field">
+        <label for="order_index">Orden de aparición</label>
+        <input type="number" id="order_index" name="order_index" value="{{ service.order_index if service else 0 }}">
+      </div>
+      <div style="display:flex; gap: 24px; align-items:center; padding-top: 28px;">
+        <div class="field-checkbox">
+          <input type="checkbox" id="is_active" name="is_active" {{ 'checked' if not service or service.is_active }}>
+          <label for="is_active">Activo (visible en el sitio)</label>
+        </div>
+        <div class="field-checkbox">
+          <input type="checkbox" id="is_featured" name="is_featured" {{ 'checked' if service and service.is_featured }}>
+          <label for="is_featured">Destacado</label>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-accent">Guardar servicio</button>
+  </form>
+</div>
+{% endblock %}
