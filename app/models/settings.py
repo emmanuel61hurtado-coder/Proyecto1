@@ -22,7 +22,7 @@ class SiteSettings(db.Model):
     __tablename__ = 'site_settings'
 
     id = db.Column(db.Integer, primary_key=True)
-    whatsapp_number = db.Column(db.String(30), default='573000000000')
+    whatsapp_number = db.Column(db.String(30), default='573161249378')
     site_name = db.Column(db.String(100), default='Arcanum')
     tagline_es = db.Column(db.String(200), default='Sabiduría ancestral para tu camino')
     tagline_en = db.Column(db.String(200), default='Ancestral wisdom for your path')
