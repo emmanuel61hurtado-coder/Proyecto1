@@ -29,6 +29,7 @@ class SiteSettings(db.Model):
     contact_email = db.Column(db.String(150), default='contacto@arcanum.com')
     instagram_url = db.Column(db.String(200), default='')
     facebook_url = db.Column(db.String(200), default='')
+    tiktok_url = db.Column(db.String(200), default='')
     whatsapp_default_message_es = db.Column(
         db.Text,
         default='Hola, vengo de la página web y quiero más información sobre sus servicios.'

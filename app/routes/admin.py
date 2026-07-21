@@ -293,6 +293,7 @@ def settings():
         site_settings.contact_email = request.form.get('contact_email', '').strip()
         site_settings.instagram_url = request.form.get('instagram_url', '').strip()
         site_settings.facebook_url = request.form.get('facebook_url', '').strip()
+        site_settings.tiktok_url = request.form.get('tiktok_url', '').strip()
         site_settings.whatsapp_default_message_es = request.form.get('whatsapp_default_message_es', '').strip()
         site_settings.whatsapp_default_message_en = request.form.get('whatsapp_default_message_en', '').strip()
         db.session.commit()

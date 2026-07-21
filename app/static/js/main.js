@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initOrderForm();
   initSmoothAnchors();
   initSplitText();
+  initShareMenu();
 });
 
 /* ═══ Preloader ═══ */
@@ -460,4 +461,127 @@ function initSplitText() {
     ).join(' ');
     el.style.visibility = 'visible';
   });
+}
+
+/* ═══ Share Page Menu ═══ */
+function initShareMenu() {
+  const shareBtn = document.getElementById('share-btn');
+  const drawerShareBtn = document.querySelector('.drawer-share-trigger');
+  const shareModal = document.getElementById('share-modal');
+  const closeBtn = document.getElementById('share-close-btn');
+  const modalOverlay = shareModal ? shareModal.querySelector('.share-modal-overlay') : null;
+
+  if (!shareModal) return;
+
+  const currentUrl = window.location.href;
+
+  // Set share link input value
+  const linkInput = document.getElementById('share-link-input');
+  if (linkInput) linkInput.value = currentUrl;
+
+  // Generate QR Code dynamically
+  const qrImg = document.getElementById('share-qr-img');
+  if (qrImg) {
+    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(currentUrl)}`;
+  }
+
+  // Configure WhatsApp Share link
+  const shareWa = document.getElementById('share-wa');
+  if (shareWa) {
+    shareWa.href = `https://wa.me/?text=${encodeURIComponent('Mira esta página: ' + currentUrl)}`;
+  }
+
+  // Configure Facebook Share link
+  const shareFb = document.getElementById('share-fb');
+  if (shareFb) {
+    shareFb.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`;
+  }
+
+  // Show Toast helper
+  function showToast(message) {
+    const toast = document.getElementById('share-toast');
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3000);
+  }
+
+  // Copy Link action
+  const copyBtn = document.getElementById('share-copy-btn');
+  if (copyBtn && linkInput) {
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(currentUrl);
+        copyBtn.classList.add('copied');
+        showToast('Enlace copiado al portapapeles');
+        setTimeout(() => {
+          copyBtn.classList.remove('copied');
+        }, 2000);
+      } catch (err) {
+        // Fallback for older browsers
+        linkInput.select();
+        document.execCommand('copy');
+        copyBtn.classList.add('copied');
+        showToast('Enlace copiado al portapapeles');
+        setTimeout(() => {
+          copyBtn.classList.remove('copied');
+        }, 2000);
+      }
+    });
+  }
+
+  // Modal display toggles
+  function openModal(e) {
+    if (e) e.preventDefault();
+    shareModal.classList.add('open');
+    shareModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    shareModal.classList.remove('open');
+    shareModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  if (shareBtn) shareBtn.addEventListener('click', openModal);
+  if (drawerShareBtn) drawerShareBtn.addEventListener('click', openModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
+
+  // Handle ESC key to close modal
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && shareModal.classList.contains('open')) {
+      closeModal();
+    }
+  });
+
+  // Instagram and TikTok mock share behaviors (copy link and redirect to standard sites)
+  const shareIg = document.getElementById('share-ig');
+  if (shareIg) {
+    shareIg.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigator.clipboard.writeText(currentUrl).then(() => {
+        showToast('Enlace copiado. ¡Pégalo en Instagram!');
+        setTimeout(() => {
+          window.open('https://www.instagram.com/', '_blank');
+        }, 1200);
+      });
+    });
+  }
+
+  const shareTt = document.getElementById('share-tt');
+  if (shareTt) {
+    shareTt.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigator.clipboard.writeText(currentUrl).then(() => {
+        showToast('Enlace copiado. ¡Pégalo en TikTok!');
+        setTimeout(() => {
+          window.open('https://www.tiktok.com/', '_blank');
+        }, 1200);
+      });
+    });
+  }
 }
