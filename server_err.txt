@@ -14,3 +14,7 @@ Press CTRL+C to quit
 127.0.0.1 - - [21/Jul/2026 23:23:32] "GET /static/js/main.js HTTP/1.1" 304 -
 127.0.0.1 - - [21/Jul/2026 23:29:46] "GET /admin/dashboard HTTP/1.1" 404 -
 127.0.0.1 - - [21/Jul/2026 23:29:46] "GET /favicon.ico HTTP/1.1" 404 -
+ * Detected change in 'C:\\Users\\USER\\OneDrive\\Desktop\\Proyecto1\\app\\__init__.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 103-840-400

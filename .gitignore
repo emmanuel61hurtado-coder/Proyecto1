@@ -8,3 +8,5 @@ instance/
 *.db
 .DS_Store
 .env
+server_out.txt
+server_err.txt
