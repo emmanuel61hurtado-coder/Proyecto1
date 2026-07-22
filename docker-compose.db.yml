@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: brujeria_db
+    restart: unless-stopped
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-brujeria}
+      POSTGRES_USER: ${POSTGRES_USER:-brujeria_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-brujeria_pass_123}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - brujeria_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-brujeria_user} -d ${POSTGRES_DB:-brujeria}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  brujeria_network:
+    name: brujeria_network
+    driver: bridge

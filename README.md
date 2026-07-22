@@ -137,21 +137,29 @@ Todo el contenido editable está disponible desde el panel admin, sin tocar cód
 
 ---
 
-## 8. Antes de publicar el sitio (producción)
+## 10. Despliegue con Docker (PostgreSQL en contenedor independiente)
 
-Este proyecto está listo para desarrollo/pruebas locales. Antes de ponerlo en un servidor público:
+El proyecto incluye archivos Docker Compose preparados para desplegar la base de datos PostgreSQL en un contenedor independiente.
 
-1. Cambia la `SECRET_KEY` en `app/__init__.py` por una clave larga y aleatoria propia.
-2. Cambia la contraseña del admin por defecto.
-3. Usa un servidor de producción real en lugar del servidor de desarrollo de Flask, por ejemplo `gunicorn`:
+### Pasos para desplegar:
+
+1. **Crear la red compartida de Docker**:
    ```bash
-   pip install gunicorn
-   gunicorn -w 4 -b 0.0.0.0:8000 run:app
+   docker network create brujeria_network
    ```
-4. Considera usar HTTPS (la mayoría de proveedores de hosting lo configuran automáticamente).
 
----
+2. **Desplegar el contenedor de PostgreSQL**:
+   ```bash
+   docker compose -f docker-compose.db.yml up -d
+   ```
 
-## 9. Soporte de idiomas
+3. **Desplegar la aplicación Flask**:
+   ```bash
+   docker compose up -d
+   ```
 
-El sitio detecta y recuerda el idioma elegido por el visitante (se guarda en su sesión). El selector ES/EN está en la esquina superior derecha del menú. Todo el contenido del sitio público (textos fijos, servicios, testimonios, formulario) está traducido.
+### Archivos de Docker:
+- `docker-compose.db.yml`: Administra el contenedor independiente de PostgreSQL (`brujeria_db`).
+- `docker-compose.yml`: Administra el servicio de la aplicación web Flask (`brujeria_web`).
+- `docker-entrypoint.sh`: Espera automáticamente a que PostgreSQL esté listo antes de iniciar Gunicorn y sincronizar las tablas de la BD.
+

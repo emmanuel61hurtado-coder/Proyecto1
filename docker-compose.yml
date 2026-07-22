@@ -1,23 +1,5 @@
 services:
 
-  # ─── Base de datos PostgreSQL ──────────────────────────────────────────────
-  db:
-    image: postgres:16-alpine
-    container_name: brujeria_db
-    restart: unless-stopped
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-brujeria}
-      POSTGRES_USER: ${POSTGRES_USER:-brujeria_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-brujeria_user} -d ${POSTGRES_DB:-brujeria}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
-
   # ─── Aplicación Flask ──────────────────────────────────────────────────────
   web:
     build: .
@@ -27,14 +9,13 @@ services:
       - "${PORT:-5000}:5000"
     environment:
       SECRET_KEY: ${SECRET_KEY}
-      DATABASE_URL: postgresql://${POSTGRES_USER:-brujeria_user}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-brujeria}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://${POSTGRES_USER:-brujeria_user}:${POSTGRES_PASSWORD:-brujeria_pass_123}@brujeria_db:5432/${POSTGRES_DB:-brujeria}}
       FLASK_ENV: production
     volumes:
       # Uploads de imágenes persistentes
       - uploads_data:/app/app/static/uploads
-    depends_on:
-      db:
-        condition: service_healthy
+    networks:
+      - brujeria_network
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/')"]
       interval: 30s
@@ -43,7 +24,10 @@ services:
       start_period: 25s
 
 volumes:
-  postgres_data:
-    driver: local
   uploads_data:
     driver: local
+
+networks:
+  brujeria_network:
+    name: brujeria_network
+    driver: bridge
