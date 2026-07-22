@@ -12,3 +12,5 @@ Press CTRL+C to quit
 127.0.0.1 - - [21/Jul/2026 23:23:32] "GET / HTTP/1.1" 200 -
 127.0.0.1 - - [21/Jul/2026 23:23:32] "GET /static/css/main.css HTTP/1.1" 200 -
 127.0.0.1 - - [21/Jul/2026 23:23:32] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [21/Jul/2026 23:29:46] "GET /admin/dashboard HTTP/1.1" 404 -
+127.0.0.1 - - [21/Jul/2026 23:29:46] "GET /favicon.ico HTTP/1.1" 404 -
