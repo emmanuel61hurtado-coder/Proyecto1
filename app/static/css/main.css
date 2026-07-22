@@ -2014,3 +2014,39 @@ section { position: relative; padding: 100px 0; }
   visibility: visible;
   transform: translateX(-50%) translateY(0);
 }
+
+/* ─── Admin Access Button ─── */
+.admin-access-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bone-dim);
+  cursor: pointer;
+  transition: all 0.4s var(--ease-out-expo);
+  opacity: 0.45;
+  flex-shrink: 0;
+}
+
+.admin-access-btn svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.4s var(--ease-out-expo);
+}
+
+.admin-access-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  opacity: 1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 168, 84, 0.2);
+}
+
+.admin-access-btn:hover svg {
+  transform: scale(1.1);
+}
+
