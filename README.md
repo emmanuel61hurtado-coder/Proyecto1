@@ -150,7 +150,7 @@ El proyecto incluye archivos Docker Compose preparados para desplegar la base de
 
 2. **Desplegar el contenedor de PostgreSQL**:
    ```bash
-   docker compose -f docker-compose.db.yml up -d
+   docker compose -f docker-compose-postgres.yml up -d
    ```
 
 3. **Desplegar la aplicación Flask**:
@@ -159,7 +159,7 @@ El proyecto incluye archivos Docker Compose preparados para desplegar la base de
    ```
 
 ### Archivos de Docker:
-- `docker-compose.db.yml`: Administra el contenedor independiente de PostgreSQL (`brujeria_db`).
+- `docker-compose-postgres.yml`: Administra el contenedor independiente de PostgreSQL (`brujeria_postgres`).
 - `docker-compose.yml`: Administra el servicio de la aplicación web Flask (`brujeria_web`).
 - `docker-entrypoint.sh`: Espera automáticamente a que PostgreSQL esté listo antes de iniciar Gunicorn y sincronizar las tablas de la BD.
 
