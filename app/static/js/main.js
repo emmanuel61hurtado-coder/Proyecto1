@@ -466,7 +466,6 @@ function initSplitText() {
 /* ═══ Share Page Menu ═══ */
 function initShareMenu() {
   const shareBtn = document.getElementById('share-btn');
-  const drawerShareBtn = document.querySelector('.drawer-share-trigger');
   const shareModal = document.getElementById('share-modal');
   const closeBtn = document.getElementById('share-close-btn');
   const modalOverlay = shareModal ? shareModal.querySelector('.share-modal-overlay') : null;
@@ -547,7 +546,6 @@ function initShareMenu() {
   }
 
   if (shareBtn) shareBtn.addEventListener('click', openModal);
-  if (drawerShareBtn) drawerShareBtn.addEventListener('click', openModal);
   if (closeBtn) closeBtn.addEventListener('click', closeModal);
   if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
 

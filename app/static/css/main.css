@@ -1644,12 +1644,12 @@ section { position: relative; padding: 100px 0; }
 .header-socials {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 4px;
 }
 
 .header-socials a {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   border: 1px solid var(--line);
   display: flex;
@@ -1657,29 +1657,57 @@ section { position: relative; padding: 100px 0; }
   justify-content: center;
   color: var(--bone-dim);
   transition: all 0.4s var(--ease-out-expo);
+  flex-shrink: 0;
 }
 
 .header-socials a svg {
-  width: 15px;
-  height: 15px;
+  width: 14px;
+  height: 14px;
   transition: transform 0.4s var(--ease-out-expo);
 }
 
 .header-socials a:hover {
-  border-color: var(--gold);
-  color: var(--gold-bright);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px var(--gold-glow);
+}
+
+.header-socials a[href*="wa.me"]:hover {
+  border-color: #25D366;
+  color: #25D366;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
+}
+
+.header-socials a[href*="instagram"]:hover {
+  border-color: #E1306C;
+  color: #E1306C;
+  box-shadow: 0 4px 12px rgba(225, 48, 108, 0.25);
+}
+
+.header-socials a[href*="facebook"]:hover {
+  border-color: #1877F2;
+  color: #1877F2;
+  box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25);
+}
+
+.header-socials a[href*="tiktok"]:hover {
+  border-color: #fff;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.25);
 }
 
 .header-socials a:hover svg {
   transform: scale(1.1);
 }
 
+@media (max-width: 900px) {
+  .header-socials {
+    display: none;
+  }
+}
+
 /* ─── Share Button in Header ─── */
 .share-btn {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   border: 1px solid var(--line);
   background: none;
@@ -1707,71 +1735,6 @@ section { position: relative; padding: 100px 0; }
 
 .share-btn:hover svg {
   transform: scale(1.1);
-}
-
-/* ─── Mobile Drawer Socials ─── */
-.mobile-drawer-socials {
-  margin-top: 24px;
-  padding-top: 24px;
-  border-top: 1px solid var(--line);
-}
-
-.mobile-drawer-socials .drawer-title {
-  display: block;
-  font-family: var(--font-ceremonial);
-  font-size: 0.72rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 16px;
-}
-
-.drawer-social-grid {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.drawer-social-grid a,
-.drawer-social-grid .drawer-share-trigger {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.02);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--bone-dim);
-  transition: all 0.3s var(--ease-out-expo);
-  cursor: pointer;
-  padding: 0;
-}
-
-.drawer-social-grid a svg,
-.drawer-social-grid .drawer-share-trigger svg {
-  width: 18px;
-  height: 18px;
-}
-
-.drawer-social-grid a:hover {
-  border-color: var(--gold);
-  color: var(--gold);
-  transform: scale(1.05);
-}
-
-.drawer-social-grid .drawer-share-trigger:hover {
-  border-color: var(--violet-soft);
-  color: var(--violet-soft);
-  transform: scale(1.05);
-}
-
-/* Hide header socials on mobile, show inside menu drawer */
-@media (max-width: 900px) {
-  .header-socials {
-    display: none;
-  }
 }
 
 /* ─── Share Modal ─── */
